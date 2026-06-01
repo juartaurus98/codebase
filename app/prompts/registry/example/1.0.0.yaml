@@ -1,0 +1,22 @@
+name: example
+version: "1.0.0"
+description: Example prompt template for demonstration and A/B testing
+model: claude-sonnet-4-6
+author: Your Name
+created_at: "2024-01-01"
+variables:
+  - task
+  - context
+template: |
+  You are a helpful assistant. Please help with the following task.
+
+  Task: {task}
+
+  Context: {context}
+
+  Provide a clear and concise response.
+metadata:
+  tags:
+    - example
+    - demo
+  eval_score: 0.85

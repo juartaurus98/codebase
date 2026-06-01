@@ -1,0 +1,76 @@
+[tool.poetry]
+name = "python-toolkit"
+version = "0.1.0"
+description = "Production-ready Python service template"
+authors = ["Your Name <your@email.com>"]
+readme = "README.md"
+packages = [{ include = "app" }]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+fastapi = "^0.115.0"
+uvicorn = { version = "^0.32.0", extras = ["standard"] }
+confluent-kafka = "^2.6.0"
+pydantic = "^2.10.0"
+pydantic-settings = "^2.7.0"
+structlog = "^24.4.0"
+python-dotenv = "^1.0.1"
+pyyaml = "^6.0.2"
+google-genai = "^1.0"
+openai = "^1.58.0"
+redis = {version = "^5.2.0", extras = ["hiredis"]}
+sqlalchemy = {version = "^2.0.0", extras = ["asyncio"]}
+asyncpg = "^0.30.0"
+alembic = "^1.13.0"
+motor = "^3.3.0"
+pymongo = "^4.6.0"
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.3.0"
+pytest-asyncio = "^0.24.0"
+pytest-cov = "^6.0.0"
+httpx = "^0.28.0"
+ruff = "^0.8.0"
+black = "^24.10.0"
+mypy = "^1.13.0"
+pre-commit = "^4.0.0"
+types-pyyaml = "^6.0.12"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.ruff]
+target-version = "py311"
+line-length = 88
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "N", "W", "UP", "B", "C4", "PT", "RUF"]
+ignore = ["B008"]  # FastAPI Depends() calls in function defaults
+
+[tool.ruff.lint.isort]
+known-first-party = ["app"]
+
+[tool.black]
+target-version = ["py311"]
+line-length = 88
+
+[tool.mypy]
+python_version = "3.11"
+strict = true
+ignore_missing_imports = true
+plugins = ["pydantic.mypy"]
+
+[tool.pydantic-mypy]
+init_forbid_extra = true
+init_typed = true
+warn_required_dynamic_aliases = true
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]
+addopts = "--cov=app --cov-report=term-missing --cov-fail-under=80"
+
+[tool.coverage.run]
+source = ["app"]
+omit = ["app/main.py"]
