@@ -1,6 +1,57 @@
 # CLAUDE.md
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+<!-- 
+---
+
+# §1. Project Overview
+Project: {{PROJECT_NAME}}
+Language: Python (3.11+)
+Framework: FastAPI  # e.g., FastAPI, Django, Flask
+Build: poetry install  # e.g., poetry install
+Test: poetry run pytest    # e.g., pytest or poetry run pytest
+Domains: Chatbot-Agentic
+
+# §2. Architecture
+layers: "{{LAYER_STACK}}"
+# Python example: Router → Service → Repository → Database
+# Or: API Endpoint → Domain Service → Infrastructure/Repository
+rules:
+  - "Router endpoints must not contain business logic"
+  - "Services own transaction boundaries and domain logic"
+  - "Repositories abstract data access (Protocol-based)"
+  - "Dependencies injected via FastAPI Depends or constructor"
+
+# §3. Coding Standards
+naming:
+  classes: "PascalCase"  # e.g., EventService, OrderRepository
+  methods: "snake_case"  # e.g., create_order(), get_by_id()
+  modules: "snake_case"  # e.g., event_service.py, db.py
+response_wrapper: "BaseResponse[T]"  # Pydantic generic wrapper
+forbidden:
+  - "Magic numbers — use named constants"
+  - "Debug print statements"
+  - "Mutable default arguments in function signatures"
+
+# §4. Traceability
+# Every router/endpoint method must be tagged:
+# @trace.implements={UC-ID}-{SC-ID}
+# @trace.source=specs/bdd/{domain}/{UC-ID}.feature  ← adjust if specs_dir differs in .agent/project-context.yaml
+# Tests must be tagged:
+# @trace.verifies={UC-ID}
+
+# §5. Error Handling
+not_found: "ResourceNotFoundError"  # Custom domain exception
+http_codes: { get: 200, create: 201, not_found: 404, validation: 422 }
+
+# §6. Build & Test
+build_command: "poetry install"  # or: pip install -r requirements.txt
+test_command: "poetry run pytest" # or: pytest
+run_command: "poetry run uvicorn app.main:app --reload --port 8000"  # FastAPI example
+
+# §7. Git Conventions
+branch_feature: "feature/{{TICKET_PREFIX}}-{N}-{slug}"
+commit_feature: "feat({{TICKET_PREFIX}}-{N}): {description}" -->
 
 ---
 

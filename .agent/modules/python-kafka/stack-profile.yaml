@@ -1,0 +1,32 @@
+build:
+  compile: "poetry install"
+  test: "poetry run pytest --cov=app.kafka"
+  run: "poetry run python app/kafka/consumer.py"
+
+architecture:
+  style: "Event-Driven (Producer → Kafka Topic → Consumer → Handler → Service)"
+  key_rules:
+    - "Producers emit domain events (non-blocking); no business logic in producers"
+    - "Consumers poll and route events to handlers (synchronous processing)"
+    - "Handlers contain business logic; may emit new events or update state"
+    - "Topics are event log (immutable); partitioning key = domain aggregate root ID"
+    - "DLQ (dead-letter queue) for failed messages; sync Consumer.commit() after processing"
+    - "Producer uses callbacks for delivery confirmation; Consumer.flush() on shutdown"
+
+coding_standards:
+  naming:
+    classes: "PascalCase"
+    functions: "snake_case"
+    modules: "snake_case"
+    events: "PascalCase (e.g., OrderCreatedEvent, PaymentProcessedEvent)"
+  patterns:
+    event_schema: "Pydantic BaseModel or Avro schema"
+    producer_singleton: "Module-level KafkaProducer instance"
+    consumer_error_handling: "Exponential backoff + DLQ forwarding"
+    exception_base: "EventProcessingError"
+
+trace_tags:
+  implements: "@trace.implements={UC-ID}-SC{N}"
+  source: "@trace.source=specs/bdd/{domain}/{UC-ID}.feature"
+  verifies: "@trace.verifies={UC-ID}"
+  test_type: "@trace.test_type=unit|integration|e2e"

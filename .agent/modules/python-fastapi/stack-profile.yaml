@@ -1,0 +1,28 @@
+build:
+  compile: "poetry install"
+  test: "poetry run pytest"
+  run: "poetry run uvicorn app.main:app --reload --port 8000"
+
+architecture:
+  style: "Hexagonal/Layered (Router → Service → Repository → DB)"
+  key_rules:
+    - "Router endpoints must not contain business logic"
+    - "Services own transaction and domain logic (@app.context_var or AsyncSession)"
+    - "Repositories abstract data access patterns (Protocol-based)"
+    - "Dependencies injected via FastAPI Depends in deps.py"
+
+coding_standards:
+  naming:
+    classes: "PascalCase"
+    functions: "snake_case"
+    modules: "snake_case"
+  patterns:
+    response_wrapper: "BaseResponse[T]"
+    mapping: "Pydantic models"
+    exception_base: "AppException"
+
+trace_tags:
+  implements: "@trace.implements={UC-ID}-SC{N}"
+  source: "@trace.source=specs/bdd/{domain}/{UC-ID}.feature"
+  verifies: "@trace.verifies={UC-ID}"
+  test_type: "@trace.test_type=unit|integration"

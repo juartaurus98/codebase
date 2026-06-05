@@ -1,0 +1,13 @@
+name: "Python Kafka"
+version: "1.0.0"
+description: "Apache Kafka with Python event-driven architecture (confluent-kafka)"
+language: "Python"
+framework: "Kafka (confluent-kafka)"
+stack_type: "event-streaming"
+default_layer_order:
+  - Schema (Pydantic models)
+  - Event Domain Model
+  - Producer (non-blocking, callback-based)
+  - Consumer (blocking poll loop)
+  - Handler/Service
+test_framework: "pytest (synchronous, no async)"

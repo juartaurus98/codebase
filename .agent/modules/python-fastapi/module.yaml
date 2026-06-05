@@ -1,0 +1,13 @@
+name: "Python FastAPI"
+version: "1.0.0"
+description: "FastAPI 0.100+ with hexagonal/layered architecture"
+language: "Python"
+framework: "FastAPI"
+stack_type: "backend"
+default_layer_order:
+  - Schema (Pydantic)
+  - Model/Entity (SQLAlchemy)
+  - Repository/Adapter
+  - Service
+  - Router/Endpoint
+test_framework: "pytest + pytest-asyncio"

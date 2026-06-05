@@ -1,0 +1,9 @@
+name: "Context Engineering"
+version: "1.0.0"
+description: "AI context design, prompt engineering, and system context workflows"
+stack_type: "ai-first"
+use_cases:
+  - "Designing AI system contexts"
+  - "Reverse engineering existing prompts"
+  - "Context window optimization"
+  - "Multi-agent coordination"

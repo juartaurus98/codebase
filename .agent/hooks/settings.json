@@ -1,0 +1,18 @@
+{
+  "_comment": "Claude Code hook registration template. Copy this content into your project's .claude/settings.json",
+  "_docs": "https://docs.anthropic.com/claude/claude-code/hooks",
+
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Read|Write|Edit|Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node .claude/hooks/data-guard.js"
+          }
+        ]
+      }
+    ]
+  }
+}

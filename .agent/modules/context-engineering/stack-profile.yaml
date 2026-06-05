@@ -1,0 +1,61 @@
+context_types:
+  system:
+    description: "Persistent instruction context that defines agent behavior and constraints"
+    lifetime: "entire session"
+    examples:
+      - "Role and persona definition"
+      - "Output format requirements"
+      - "Capability constraints and safety boundaries"
+  user:
+    description: "Per-turn input from the human, including instructions and data"
+    lifetime: "current turn"
+  tool:
+    description: "Results returned from tool calls (function outputs, search results)"
+    lifetime: "current turn or until referenced"
+  memory:
+    description: "Persistent state stored and retrieved across turns or sessions"
+    lifetime: "configurable — session, project, or long-term"
+
+context_optimization:
+  rules:
+    - "Front-load the most decision-relevant context (primacy effect)"
+    - "Remove redundant instructions — each rule stated once"
+    - "Separate stable context (system prompt) from dynamic context (user message)"
+    - "Use structured formats (YAML/JSON/Markdown headers) for scannable context"
+    - "Compress historical context before adding new turns (rolling summary)"
+    - "Reference external documents by path rather than inlining large content"
+  token_budget_targets:
+    system_prompt: "under 2000 tokens for most use cases"
+    context_window_reserve: "20% of max window for model output"
+
+evaluation_criteria:
+  clarity:
+    description: "Is each instruction unambiguous and actionable?"
+    test: "Would two different agents interpret this identically?"
+  completeness:
+    description: "Does context include all information the agent needs?"
+    test: "Can the agent complete the task without asking for clarification?"
+  relevance:
+    description: "Is every sentence load-bearing for the task?"
+    test: "Would removing this sentence change agent behavior?"
+  consistency:
+    description: "Are there no contradictory instructions?"
+    test: "Can all rules be simultaneously satisfied?"
+
+common_patterns:
+  rag:
+    name: "Retrieval-Augmented Generation"
+    use_when: "Agent needs knowledge beyond training cutoff or domain-specific facts"
+    structure: "System: role + instructions | User: query | Tool: retrieved chunks | User: synthesize"
+  chain_of_thought:
+    name: "Chain of Thought"
+    use_when: "Complex reasoning tasks requiring intermediate steps"
+    structure: "Include 'think step by step' or explicit reasoning scaffold in system prompt"
+  few_shot:
+    name: "Few-Shot Examples"
+    use_when: "Output format or classification must match specific patterns"
+    structure: "Provide 2-5 input/output pairs before the actual task"
+  multi_agent:
+    name: "Multi-Agent Coordination"
+    use_when: "Task can be parallelized or requires specialist sub-agents"
+    structure: "Orchestrator context + worker contexts + handoff format definition"

@@ -1,0 +1,78 @@
+# =============================================================
+# Project Context — AI-First Spec-Driven Development
+# =============================================================
+# This is the SINGLE SOURCE OF TRUTH for project-specific
+# paths, tools, and routing used by all workflows.
+#
+# Workflows reference this file for WHERE to find things.
+# Workflow steps define WHAT to do (universal best practices).
+# =============================================================
+#
+# HOW AI AGENTS USE THIS FILE:
+# 1. Open this file at the start of any workflow
+# 2. Parse the YAML structure
+# 3. When a workflow says "→ key.subkey", look up that key
+#    and use the resolved value as the actual path
+# 4. All paths are RELATIVE to workspace root
+# 5. For "{domain}", substitute from spec's @trace.domain
+# =============================================================
+
+project:
+  name: "{{PROJECT_NAME}}"
+  description: "{{PROJECT_DESCRIPTION}}"
+
+# ----- File Paths -----
+# All paths are relative to workspace root.
+paths:
+  # BDD Specs
+  specs_dir: "specs/bdd"
+  templates_dir: "specs/templates"
+  feature_template: "specs/templates/feature.template"
+  bdd_writing_guide: "specs/templates/bdd-writing-guide.md"
+  trace_report: "specs/.trace/trace-report.md"
+
+  # PRD Documents
+  prd_dir: "specs/prd"
+  prd_template: "specs/templates/prd.template.md"
+  refinement_dir: ".agent/review"
+
+  # Product Definitions
+  product_definitions_dir: "specs/product-definition"
+  product_definition_template: "specs/templates/product-definition.template.md"
+
+  # Domain Knowledge
+  domain_knowledge_dir: "specs/domain-knowledge"
+  business_dictionary: "specs/domain-knowledge/business-dictionary.md"
+  core_entities: "specs/domain-knowledge/core-entities.md"
+
+  # Tech Docs
+  tech_docs_dir: "tech-docs"
+
+  # Trace
+  trace_dir: ".trace"
+
+tech_stack:
+  language: "{{LANGUAGE}}"              # e.g., Python 3.10 / Python 3.11 / Python 3.12
+  framework: "{{FRAMEWORK}}"           # e.g., FastAPI / Django / Flask / Starlette
+  build_tool: "{{BUILD_TOOL}}"         # e.g., Poetry / pip / pdm / uv
+  test_framework: "{{TEST_FRAMEWORK}}" # e.g., pytest / unittest / pytest + Pytest-Mock
+  database: "{{DATABASE}}"             # e.g., PostgreSQL / MySQL / MongoDB / SQLite
+  module: "{{MODULE}}"                 # e.g., python-fastapi / python-django / python-flask
+
+conventions:
+  build_command: "{{BUILD_COMMAND}}"   # e.g., poetry install
+  test_command: "{{TEST_COMMAND}}"     # e.g., pytest or poetry run pytest
+  service_run: "{{RUN_COMMAND}}"       # e.g., poetry run uvicorn app.main:app --reload or poetry run python manage.py runserver
+  ticket_prefix: "{{TICKET_PREFIX}}"  # e.g., PROJ / FEAT / UC
+
+domains:
+  - "{{DOMAIN_1}}"
+  # - "{{DOMAIN_2}}"
+
+# ----- Architecture -----
+architecture:
+  style: "{{ARCH_STYLE}}"              # e.g., Layered / Clean / Hexagonal / FastAPI Modular
+  layers: "{{LAYER_STACK}}"            # e.g., Router → Service → Repository → DB / API Endpoint → Domain → Infrastructure
+  key_rules:
+    - "{{ARCH_RULE_1}}"
+    - "{{ARCH_RULE_2}}"
